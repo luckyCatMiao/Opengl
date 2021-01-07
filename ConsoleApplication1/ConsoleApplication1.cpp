@@ -1,17 +1,27 @@
 // ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include<gl/glut.h>
+#include<glut.h>
 #include "DrawUtil.h"
 #include "MathStruct.h"
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include "Student.h"
+#include "Vector2.h"
+#include "Matrix2D.h"
+using namespace std;
+
 
 void display();
 void init();
 void gradientLineTest();
 void gradientTriangleTest();
+void drawRect();
 
 int main(int argc, char** argv)
-{
+{    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowPosition(50, 100);
@@ -56,7 +66,8 @@ void display()
     lineDDA(p2,p1 );*/ //≤‚ ‘DDAÀ„∑®
 
     //DrawSphere1({ 100,100 }, 50);
-    DrawSphere3({ 100,100 }, 50);
+    //DrawSphere3({ 100,100 }, 50);
+    drawRect();
 
     
     glFlush();
@@ -65,6 +76,38 @@ void display()
 
 
 }
+
+void drawRect() {
+
+    
+    Vector2* v1 = new Vector2(50, 50);
+    Vector2* v2 = new Vector2(100, 50);
+    Vector2* v3 = new Vector2(100, 100);
+    Vector2* v4 = new Vector2(50, 100);
+
+    vector<Vector2> vectors;
+    vectors.push_back(*v1);
+    vectors.push_back(*v2);
+    vectors.push_back(*v3);
+    vectors.push_back(*v4);
+
+    Matrix2D* matrix = new Matrix2D();
+    matrix->translate(150,150);
+    matrix->apply(vectors);
+
+
+    glColor3f(0, 1, 0);
+    glBegin(GL_POLYGON);
+    glVertex2d(vectors[0].x, vectors[0].y);
+    glVertex2d(vectors[1].x, vectors[1].y);
+    glVertex2d(vectors[2].x, vectors[2].y);
+    glVertex2d(vectors[3].x, vectors[3].y);
+    glEnd();
+
+
+    delete (v1); delete(v2); delete(v3); delete(v4);
+}
+
 
 void gradientLineTest() {
 

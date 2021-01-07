@@ -1,5 +1,5 @@
 #include "DrawUtil.h"
-#include<gl/glut.h>
+#include<glut.h>
 #include <math.h>
 #include<stdio.h>
 
