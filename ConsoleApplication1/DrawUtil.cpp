@@ -46,9 +46,9 @@ void lineBresenham(Point p1,Point p2) {
 
 	glBegin(GL_POINTS);
 	glColor3f(0, 0, 0);
-	glVertex2i(x, y);//画初始点
-	for (int i = p1.x; i < p2.x; i++)
+	for (int i = p1.x; i <=p2.x; i++)
 	{
+		glVertex2i(x, y);
 		x++;
 		if (p < 0)
 		{
@@ -58,7 +58,6 @@ void lineBresenham(Point p1,Point p2) {
 		{	p += 2 * dy - 2 * dx;
 			y++;
 		}
-		glVertex2i(x,y);
 	}
 	glEnd();
 	glFlush();
@@ -74,9 +73,9 @@ void lineMidPoint(Point p1, Point p2)
 
 	glBegin(GL_POINTS);
 	glColor3f(0, 0, 0);
-	glVertex2i(x, y);//画初始点
-	for (int i = p1.x; i < p2.x; i++)
+	for (int i = p1.x; i <=p2.x; i++)
 	{
+		glVertex2i(x, y);
 		x++;
 		if (p < 0)
 		{
@@ -88,7 +87,6 @@ void lineMidPoint(Point p1, Point p2)
 			p += 2 * dy - 2 * dx;
 			y++;
 		}
-		glVertex2i(x, y);
 	}
 	glEnd();
 	glFlush();
@@ -96,7 +94,7 @@ void lineMidPoint(Point p1, Point p2)
 
 
 //直接使用圆的笛卡尔坐标方程生成圆
-void drawSphere1(Point center,int  radius)
+void sphereSimple(Point center,int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(1, 0, 0);
@@ -115,7 +113,7 @@ void drawSphere1(Point center,int  radius)
 
 
 //使用极坐标生成圆
-void drawSphere2(Point center, int  radius)
+void spherePolarCoord(Point center, int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(0, 1, 0);
@@ -135,7 +133,7 @@ void drawSphere2(Point center, int  radius)
 
 
 //使用对称性的极坐标
-void drawSphere3(Point center, int  radius)
+void spherePolarCoord2(Point center, int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(0, 1, 1);
@@ -152,10 +150,72 @@ void drawSphere3(Point center, int  radius)
 		glVertex2i(center.x+y, center.y+-x);
 		glVertex2i(center.x+-y,center.y+ x);
 		glVertex2i(center.x+-y,center.y+ -x);
-
 	}
-
 	glEnd();
 	glFlush();
 
+}
+
+//使用Bresenham算法画圆
+void sphereBresenham(Point center, int radius) {
+	int x = 0; int y = radius;
+	int p = 3-2*radius;//初始决策参数
+
+	glBegin(GL_POINTS);
+	glColor3f(0, 0, 0);
+	while (x <= y) //计算90度到45度的圆弧然后使用八路对称
+	{
+		glVertex2i(center.x + x, center.y + y);
+		glVertex2i(center.x + x, center.y + -y);
+		glVertex2i(center.x + -x, center.y + y);
+		glVertex2i(center.x + -x, center.y + -y);
+		glVertex2i(center.x + y, center.y + x);
+		glVertex2i(center.x + y, center.y + -x);
+		glVertex2i(center.x + -y, center.y + x);
+		glVertex2i(center.x + -y, center.y + -x);
+
+		if (p < 0)
+		{
+			p += 4 * x + 6;
+		}
+		else {
+			p += 4 * (x - y) + 10;
+			y--;
+		}
+		x++;
+	}
+	glEnd();
+	glFlush();
+}
+
+//使用中点算法画圆
+void sphereMidPoint(Point center, int radius) {
+	int x = 0; int y = radius;
+	int p = 1-  radius;//初始决策参数
+
+	glBegin(GL_POINTS);
+	glColor3f(0, 0, 0);
+	while (x <= y) //计算90度到45度的圆弧然后使用八路对称
+	{
+		glVertex2i(center.x + x, center.y + y);
+		glVertex2i(center.x + x, center.y + -y);
+		glVertex2i(center.x + -x, center.y + y);
+		glVertex2i(center.x + -x, center.y + -y);
+		glVertex2i(center.x + y, center.y + x);
+		glVertex2i(center.x + y, center.y + -x);
+		glVertex2i(center.x + -y, center.y + x);
+		glVertex2i(center.x + -y, center.y + -x);
+
+		if (p < 0)
+		{
+			p += 2 * x + 3;
+		}
+		else {
+			p += 2 * (x - y) + 5;
+			y--;
+		}
+		x++;
+	}
+	glEnd();
+	glFlush();
 }

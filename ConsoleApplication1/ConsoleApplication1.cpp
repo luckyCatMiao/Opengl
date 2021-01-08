@@ -64,13 +64,12 @@ void display()
     Point p1 = { 20,20 };
     Point p2 = { 190,150 };
     //lineDDA(p2,p1 ); //≤‚ ‘DDAÀ„∑®
-    lineBresenham(p1, p2);  //≤‚ ‘BresenhamÀ„∑®
+    //lineBresenham(p1, p2);  //≤‚ ‘BresenhamÀ„∑®
 
 
-    //DrawSphere1({ 100,100 }, 50);
-    //DrawSphere3({ 100,100 }, 50);
-    //drawRect();
-
+    Point p3 = { 100,100 };
+    //sphereBresenham(p3, 50);
+    sphereMidPoint(p3, 50);
     
 
 

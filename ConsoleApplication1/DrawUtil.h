@@ -8,6 +8,8 @@ void lineDDA(Point p1,Point p2);
 void lineBresenham(Point p1, Point p2);
 void lineMidPoint(Point p1, Point p2);
 
-void drawSphere1(Point center, int  radius);
-void drawSphere2(Point center, int  radius);
-void drawSphere3(Point center, int  radius);
+void sphereSimple(Point center, int  radius);
+void spherePolarCoord(Point center, int  radius);
+void spherePolarCoord2(Point center, int  radius);
+void sphereBresenham(Point center, int radius);
+void sphereMidPoint(Point center, int radius);
