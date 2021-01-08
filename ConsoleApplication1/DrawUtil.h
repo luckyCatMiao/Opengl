@@ -6,6 +6,8 @@
 #include "MathStruct.h"
 void lineDDA(Point p1,Point p2);
 void lineBresenham(Point p1, Point p2);
-void DrawSphere1(Point center, int  radius);
-void DrawSphere2(Point center, int  radius);
-void DrawSphere3(Point center, int  radius);
+void lineMidPoint(Point p1, Point p2);
+
+void drawSphere1(Point center, int  radius);
+void drawSphere2(Point center, int  radius);
+void drawSphere3(Point center, int  radius);

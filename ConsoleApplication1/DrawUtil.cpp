@@ -64,11 +64,39 @@ void lineBresenham(Point p1,Point p2) {
 	glFlush();
 }
 
-//中点画线
+//中点画线 类似bresenham算法 也是使用递进决策函数 不过是用中点来决策 (下一个点是在中点上方还是下方)
+//代码将小数化整之后似乎和bresenham是完全一样的 只是推导过程不同
+void lineMidPoint(Point p1, Point p2)
+{
+	int x = p1.x; int y = p1.y;
+	int dx = fabs(p2.x - p1.x); int dy = fabs(p2.y - p1.y);
+	int p = 2 * dy - dx;//初始决策参数
+
+	glBegin(GL_POINTS);
+	glColor3f(0, 0, 0);
+	glVertex2i(x, y);//画初始点
+	for (int i = p1.x; i < p2.x; i++)
+	{
+		x++;
+		if (p < 0)
+		{
+			
+			p += 2 * dy;
+		}
+		else
+		{
+			p += 2 * dy - 2 * dx;
+			y++;
+		}
+		glVertex2i(x, y);
+	}
+	glEnd();
+	glFlush();
+}
 
 
 //直接使用圆的笛卡尔坐标方程生成圆
-void DrawSphere1(Point center,int  radius)
+void drawSphere1(Point center,int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(1, 0, 0);
@@ -87,7 +115,7 @@ void DrawSphere1(Point center,int  radius)
 
 
 //使用极坐标生成圆
-void DrawSphere2(Point center, int  radius)
+void drawSphere2(Point center, int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(0, 1, 0);
@@ -107,7 +135,7 @@ void DrawSphere2(Point center, int  radius)
 
 
 //使用对称性的极坐标
-void DrawSphere3(Point center, int  radius)
+void drawSphere3(Point center, int  radius)
 {
 	glBegin(GL_POINTS);
 	glColor3f(0, 1, 1);
