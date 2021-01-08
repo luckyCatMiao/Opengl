@@ -2,9 +2,11 @@
 #include<glut.h>
 #include <math.h>
 #include<stdio.h>
-
+#include<stack>
+using namespace std;
 inline int max(float a, float b) { return a > b ? a : b; }
 #define round(x) ((int)(x+0.5))
+#define floatEqual(a,b) (fabs(a-b)<=0.01?1:0)
 #define π 3.14
 
 //dda画线
@@ -217,5 +219,88 @@ void sphereMidPoint(Point center, int radius) {
 		x++;
 	}
 	glEnd();
+	glFlush();
+}
+
+//检查颜色是否相同
+bool checkColor(GLfloat* c1, GLfloat* c2)
+{
+	return
+			(fabs(c1[0] - c2[0]) < 0.01f &&
+			fabs(c1[1] - c2[1]) < 0.01f &&
+			fabs(c1[2] - c2[2]) < 0.01f);
+}
+
+//基于递归的四连通漫水法
+void floodFill4Recur_(int x, int y, GLfloat* borderColor, GLfloat* fillColor)
+{
+	//开辟空间存储读出的颜色
+	GLfloat* colors = new GLfloat[3];
+	//读取所在像素的颜色
+	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, colors);
+	if (checkColor(colors,borderColor)||checkColor(colors,fillColor))
+	{
+		//触碰到边界和已填充区域则退出
+		return;
+	}
+	else
+	{
+		//填充当前颜色
+		glBegin(GL_POINTS);
+		glColor3f(fillColor[0], fillColor[1], fillColor[2]);
+		glVertex2i(x, y);
+		glEnd();
+
+		//四连通填充邻近区域,可扩展为八连通
+		floodFill4Recur_(x + 1, y, borderColor, fillColor);
+		floodFill4Recur_(x - 1, y, borderColor, fillColor);
+		floodFill4Recur_(x, y + 1, borderColor, fillColor);
+		floodFill4Recur_(x, y - 1, borderColor, fillColor);
+	}
+	glFlush();
+}
+void floodFill4Recur(int x,int y, GLfloat* borderColor, GLfloat* fillColor)
+{
+	floodFill4Recur_(x, y, borderColor, fillColor);
+}
+
+
+
+
+//基于栈的四连通漫水法
+void floodFill4Stack(int x, int y, GLfloat* borderColor, GLfloat* fillColor)
+{
+	stack<Point> s;
+	Point p = { x,y };
+	s.push(p);//压入初始节点
+	while (!s.empty())
+	{
+		Point newP = s.top();
+		s.pop();
+		//开辟空间存储读出的颜色
+		GLfloat* colors = new GLfloat[3];
+		//读取所在像素的颜色
+		glReadPixels(newP.x, newP.y, 1, 1, GL_RGB, GL_FLOAT, colors);
+		if (checkColor(colors, borderColor) || checkColor(colors, fillColor))
+		{
+			continue;
+		}
+		else
+		{
+			//填充当前颜色
+			glBegin(GL_POINTS);
+			glColor3f(fillColor[0], fillColor[1], fillColor[2]);
+			glVertex2i(newP.x, newP.y);
+			glEnd();
+			glFlush();
+
+			//四连通填充邻近区域,可扩展为八连通
+			s.push({newP.x + 1, newP.y});
+			s.push({newP.x - 1, newP.y});
+			s.push({newP.x, newP.y + 1});
+			s.push({newP.x, newP.y - 1});
+		}
+	}
+
 	glFlush();
 }

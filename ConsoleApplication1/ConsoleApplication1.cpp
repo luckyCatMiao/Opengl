@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 {    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowPosition(50, 100);
+    glutInitWindowPosition(500, 500);
     glutInitWindowSize(200, 200);
     glutCreateWindow("title");
 
@@ -50,29 +50,39 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-
-    //glColor3f(1, 0,0);
-    //glBegin(GL_LINES);
-    //glVertex2i(10, 10);
-    //glVertex2i(190, 140);
-    //glEnd();
-
     //gradientLineTest();//测试渐变色直线
     //gradientTriangleTest(); //测试渐变三角形
 
 
-    Point p1 = { 20,20 };
-    Point p2 = { 190,150 };
+    //Point p1 = { 20,20 };
+    //Point p2 = { 190,150 };
     //lineDDA(p2,p1 ); //测试DDA算法
     //lineBresenham(p1, p2);  //测试Bresenham算法
 
 
-    Point p3 = { 100,100 };
+    //测试画圆
+    //Point p3 = { 100,100 };
     //sphereBresenham(p3, 50);
-    sphereMidPoint(p3, 50);
+    //sphereMidPoint(p3, 50);
     
+    //测试漫水法，需要先定义边界
+    GLfloat* borderColor = new GLfloat[3]{0,0,0};
+    GLfloat* fillColor = new GLfloat[3]{ 1,0,0 };
+    glColor3f(borderColor[0], borderColor[1], borderColor[2]);
+    glBegin(GL_LINE_LOOP);
+        glVertex2f(20,20);
+        glVertex2f(150, 20);
+        glVertex2f(150, 150);
+        glVertex2f(0, 150);
+    glEnd();
+    glFlush();
 
 
+    //floodFill4Recur(75, 75, borderColor, fillColor);
+    floodFill4Stack(75, 75, borderColor, fillColor);
+
+    delete(borderColor);
+    delete(fillColor);
 }
 
 void drawRect() {
