@@ -27,7 +27,7 @@ public:
 		v2.y = y;
 	}
 
-	void apply(vector<Vector2> arr)
+	void apply(vector<Vector2>& arr)
 	{
 		for (Vector2& v : arr)
 		{

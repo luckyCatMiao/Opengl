@@ -1,5 +1,7 @@
 #pragma once
 #include <glut.h>
+#ifndef Vector2_H
+#define Vector2_H
 class Vector2
 {
 public:
@@ -11,3 +13,5 @@ public:
 	}
 };
 
+Vector2& distance(Vector2& v1, Vector2& v2);
+#endif // !1

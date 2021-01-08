@@ -61,16 +61,15 @@ void display()
     //gradientTriangleTest(); //≤‚ ‘Ω•±‰»˝Ω«–Œ
 
 
-    /*Point p1 = { 20,20 };
+    Point p1 = { 20,20 };
     Point p2 = { 190,150 };
-    lineDDA(p2,p1 );*/ //≤‚ ‘DDAÀ„∑®
+    //lineDDA(p2,p1 ); //≤‚ ‘DDAÀ„∑®
+    lineBresenham(p1, p2);  //≤‚ ‘BresenhamÀ„∑®
+
 
     //DrawSphere1({ 100,100 }, 50);
     //DrawSphere3({ 100,100 }, 50);
-    drawRect();
-
-    
-    glFlush();
+    //drawRect();
 
     
 
@@ -85,27 +84,26 @@ void drawRect() {
     Vector2* v3 = new Vector2(100, 100);
     Vector2* v4 = new Vector2(50, 100);
 
-    vector<Vector2> vectors;
-    vectors.push_back(*v1);
-    vectors.push_back(*v2);
-    vectors.push_back(*v3);
-    vectors.push_back(*v4);
+    vector<Vector2>* vectors=new vector<Vector2>();
+    vectors->push_back(*v1);
+    vectors->push_back(*v2);
+    vectors->push_back(*v3);
+    vectors->push_back(*v4);
 
     Matrix2D* matrix = new Matrix2D();
-    matrix->translate(150,150);
-    matrix->apply(vectors);
+    matrix->translate(50,50);
+    matrix->apply(*vectors);
 
 
     glColor3f(0, 1, 0);
     glBegin(GL_POLYGON);
-    glVertex2d(vectors[0].x, vectors[0].y);
-    glVertex2d(vectors[1].x, vectors[1].y);
-    glVertex2d(vectors[2].x, vectors[2].y);
-    glVertex2d(vectors[3].x, vectors[3].y);
+    glVertex2d((*vectors)[0].x, (*vectors)[0].y);
+    glVertex2d((*vectors)[1].x, (*vectors)[1].y);
+    glVertex2d((*vectors)[2].x, (*vectors)[2].y);
+    glVertex2d((*vectors)[3].x, (*vectors)[3].y);
     glEnd();
 
-
-    delete (v1); delete(v2); delete(v3); delete(v4);
+    delete (v1); delete(v2); delete(v3); delete(v4); delete(vectors);
 }
 
 
