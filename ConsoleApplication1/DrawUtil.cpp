@@ -35,6 +35,7 @@ void lineDDA(Point p1, Point p2)
 	}
 
 	glEnd();
+	glFlush();
 }
 
 
@@ -303,4 +304,86 @@ void floodFill4Stack(int x, int y, GLfloat* borderColor, GLfloat* fillColor)
 	}
 
 	glFlush();
+}
+
+//区域编码
+const int winLeftMask = 0b0001;
+const int winRightMask = 0b0010;
+const int winTopMask = 0b1000;
+const int winBottomMask = 0b0100;
+
+GLubyte _encode(Point p, Point min, Point max) {
+	GLubyte code = 0;
+	//对该点进行编码，注意这里小于大于不能写成小于等于和大于等于，因为在裁剪时是把裁剪点设置在边界线上
+	if (p.x < min.x) code |= winLeftMask;
+	if (p.x > max.x) code |= winRightMask;
+	if (p.y < min.y) code |= winBottomMask;
+	if (p.y > max.y) code |= winTopMask;
+
+	return code;
+	
+}
+
+void swapPoint(Point* p1, Point* p2)
+{
+	Point temp = *p1;
+	*p1 = *p2;
+	*p2 = temp;
+}
+void swapCode(GLubyte* v1, GLubyte* v2)
+{
+	GLubyte temp = *v1;
+	*v1 = *v2;
+	*v2 = temp;
+}
+//Cohen-Sutherland编码裁剪算法
+void cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max)
+{	
+	bool done = false;
+	GLubyte code1, code2;
+	while (!done)
+	{
+		//对两端点进行编码
+		code1 = _encode(p1,min,max);
+		code2 = _encode(p2, min, max);
+
+		//如果两端点都在区域内则不用裁剪
+		if ((code1 == 0) && (code2 == 0)) return;
+		//如果两端点都在区域外且不穿过区域则不裁剪
+		if ((code1 & code2) != 0) return;
+
+		//这个时候确定哪个点是在外部(也可能两个点都在外部，但是至少有一个，只要选定一个就行)
+		if (code1 == 0)
+		{
+			swapPoint(&p1, &p2);
+			swapCode(&code1, &code2);
+		}
+		//此时后缀为1的点在区域外部 开始裁剪 顺序为左右下上
+
+
+		float k = (float)(p2.y - p1.y) / (p2.x - p1.x);//计算斜率
+		//使用与操作判断该点是否在相关区域中 然后根据直线方程依次求与边界的交点 
+		if (code1 & winLeftMask)
+		{
+			p1.y += (min.x - p1.x) * k;
+			p1.x = min.x;
+		}
+		else if (code1 & winRightMask)
+		{
+			p1.y += (max.x - p1.x) * k;
+			p1.x = max.x;
+		}
+		else if (code1 & winBottomMask)
+		{
+			p1.x+=(min.y-p1.y)/k;
+			p1.y = min.y;
+		}
+		else if (code1 & winTopMask)
+		{
+			p1.x += (max.y-p1.y)/k;
+			p1.y = max.y;
+		}
+
+		//此时只处理完一个点 还要再来一轮看确定是否两点都在区域内 不过最多处理两轮
+	}
 }

@@ -66,23 +66,36 @@ void display()
     //sphereMidPoint(p3, 50);
     
     //测试漫水法，需要先定义边界
-    GLfloat* borderColor = new GLfloat[3]{0,0,0};
-    GLfloat* fillColor = new GLfloat[3]{ 1,0,0 };
-    glColor3f(borderColor[0], borderColor[1], borderColor[2]);
-    glBegin(GL_LINE_LOOP);
-        glVertex2f(20,20);
-        glVertex2f(150, 20);
-        glVertex2f(150, 150);
-        glVertex2f(0, 150);
-    glEnd();
-    glFlush();
+    //GLfloat* borderColor = new GLfloat[3]{0,0,0};
+    //GLfloat* fillColor = new GLfloat[3]{ 1,0,0 };
+    //glColor3f(borderColor[0], borderColor[1], borderColor[2]);
+    //glBegin(GL_LINE_LOOP);
+    //    glVertex2f(20,20);
+    //    glVertex2f(150, 20);
+    //    glVertex2f(150, 150);
+    //    glVertex2f(0, 150);
+    //glEnd();
+    //glFlush();
 
 
-    //floodFill4Recur(75, 75, borderColor, fillColor);
-    floodFill4Stack(75, 75, borderColor, fillColor);
+    ////floodFill4Recur(75, 75, borderColor, fillColor);
+    //floodFill4Stack(75, 75, borderColor, fillColor);
 
-    delete(borderColor);
-    delete(fillColor);
+    //delete(borderColor);
+    //delete(fillColor);
+
+    //测试裁剪
+     Point p1 = { 20,20 };
+     Point p2 = { 190,150 };
+     Point min = { 50,50 };
+     Point max = { 100,100 };
+     glColor3f(0, 0, 0);
+     glRecti(min.x, min.y, max.x, max.y);
+     //lineDDA(p1, p2);
+     cohen_Sutherland_LineClip(p1, p2, min, max);
+     lineDDA(p1, p2);
+
+
 }
 
 void drawRect() {
