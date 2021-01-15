@@ -24,6 +24,6 @@ void floodFill4Recur(int x, int y, GLfloat* borderColor, GLfloat* fillColor);
 
 
 //²Ã¼ô
-void cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max);
-
+bool cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max);
+bool pointClip(Point& point, Point min, Point max);
 #endif // !MathStruct

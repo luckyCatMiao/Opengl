@@ -22,6 +22,7 @@ void drawRect();
 
 int main(int argc, char** argv)
 {    
+    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowPosition(500, 500);
@@ -85,16 +86,38 @@ void display()
     //delete(fillColor);
 
     //测试裁剪
-     Point p1 = { 20,20 };
-     Point p2 = { 190,150 };
-     Point min = { 50,50 };
-     Point max = { 100,100 };
-     glColor3f(0, 0, 0);
-     glRecti(min.x, min.y, max.x, max.y);
+     //Point p1 = { 20,20 };
+     //Point p2 = { 190,150 };
+     //Point min = { 50,50 };
+     //Point max = { 100,100 };
+     //glColor3f(0, 0, 0);
+     //glRecti(min.x, min.y, max.x, max.y);
+     ////lineDDA(p1, p2);
+     //cohen_Sutherland_LineClip(p1, p2, min, max);
      //lineDDA(p1, p2);
-     cohen_Sutherland_LineClip(p1, p2, min, max);
-     lineDDA(p1, p2);
 
+
+    //二维几何变换
+    //glViewport(0, 0, 100, 100);
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    //glRotatef(30, 0, 0, 1);
+    //glColor3f(1, 0, 0);
+    //glBegin(GL_TRIANGLES);
+    //glVertex2f(10, 10);
+    //glVertex2f(200, 50);
+    //glVertex2f(100,150);
+    //glEnd();
+
+    //glViewport(100, 100, 200, 200);
+    //glBegin(GL_TRIANGLES);
+    //glVertex2f(10, 10);
+    //glVertex2f(200, 50);
+    //glVertex2f(100, 150);
+    //glEnd();
+    //glFlush();
+
+    
 
 }
 

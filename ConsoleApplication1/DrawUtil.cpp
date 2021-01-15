@@ -336,21 +336,22 @@ void swapCode(GLubyte* v1, GLubyte* v2)
 	*v1 = *v2;
 	*v2 = temp;
 }
+
+
 //Cohen-Sutherland编码裁剪算法
-void cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max)
+bool cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max)
 {	
-	bool done = false;
 	GLubyte code1, code2;
-	while (!done)
+	while (true)
 	{
 		//对两端点进行编码
 		code1 = _encode(p1,min,max);
 		code2 = _encode(p2, min, max);
 
 		//如果两端点都在区域内则不用裁剪
-		if ((code1 == 0) && (code2 == 0)) return;
+		if ((code1 == 0) && (code2 == 0)) return true;
 		//如果两端点都在区域外且不穿过区域则不裁剪
-		if ((code1 & code2) != 0) return;
+		if ((code1 & code2) != 0) return false;
 
 		//这个时候确定哪个点是在外部(也可能两个点都在外部，但是至少有一个，只要选定一个就行)
 		if (code1 == 0)
@@ -384,6 +385,12 @@ void cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max)
 			p1.y = max.y;
 		}
 
-		//此时只处理完一个点 还要再来一轮看确定是否两点都在区域内 不过最多处理两轮
+		//需要多轮处理
 	}
+}
+
+//点裁剪
+bool pointClip(Point& point, Point min, Point max)
+{
+	return(point.x > min.x && point.x<max.x&& point.y>min.y && point.y < max.y);
 }
