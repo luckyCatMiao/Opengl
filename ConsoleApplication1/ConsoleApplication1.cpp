@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowPosition(500, 500);
-    glutInitWindowSize(200, 200);
+    glutInitWindowSize(500, 500);
     glutCreateWindow("title");
 
     init();
@@ -35,17 +35,200 @@ int main(int argc, char** argv)
     glutMainLoop();
 
 }
+
+
 void init()
 {
     glClearColor(1, 1, 1, 1);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, 200, 0, 200);
+    gluOrtho2D(0, 500, 0, 500);
     //glEnable(GL_BLEND);
     //glBlendFunc(0.5, 0.5);
 }
 
 
+void test1() {
+
+    //二维几何变换
+        //glViewport(0, 0, 100, 100);
+        //glMatrixMode(GL_MODELVIEW);
+        //glLoadIdentity();
+        //glRotatef(30, 0, 0, 1);
+        //glColor3f(1, 0, 0);
+        //glBegin(GL_TRIANGLES);
+        //glVertex2f(10, 10);
+        //glVertex2f(200, 50);
+        //glVertex2f(100,150);
+        //glEnd();
+
+        //glViewport(100, 100, 200, 200);
+        //glBegin(GL_TRIANGLES);
+        //glVertex2f(10, 10);
+        //glVertex2f(200, 50);
+        //glVertex2f(100, 150);
+        //glEnd();
+        //glFlush();
+
+    ////opengl平移变换
+    ////绘制变换前的矩形
+    //glColor3f(1, 0, 0);
+    //glRecti(100, 100,200,200);
+    ////重置矩阵变换栈
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    ////构建平移矩阵
+    //glTranslatef(200, 0, 0);
+    ////绘制变换后的矩形
+    //glColor3f(0, 1, 0);
+    //glRecti(100, 100, 200, 200);
+
+
+    ////opengl旋转变换
+    ////绘制变换前的矩形
+    //glColor3f(1, 0, 0);
+    //glRecti(100, 100, 200, 200);
+    ////重置矩阵变换栈
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    ////构建旋转矩阵
+    //glRotatef(30, 0, 0, 1);
+    ////绘制变换后的矩形
+    //glColor3f(0, 1, 0);
+    //glRecti(100, 100, 200, 200);
+
+
+    //opengl缩放变换
+    ////绘制变换前的矩形
+    //glColor3f(1, 0, 0);
+    //glRecti(100, 100, 200, 200);
+    ////重置矩阵变换栈
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    ////构建缩放矩阵
+    //glScalef(0.5, 0.5, 0);
+    ////绘制变换后的矩形
+    //glColor3f(0, 1, 0);
+    //glRecti(100, 100, 200, 200);
+
+
+    ////opengl绕中心旋转变换
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    ////逆旋转矩阵，即把物体移动回原来的位置
+    //glTranslatef(150, 150,0);
+    ////复合旋转矩阵
+    //glRotatef(45, 0, 0, 1);
+    ////构建平移矩阵将物体中心移动到原点
+    //glTranslatef(-150, -150, 0);
+    //glColor3f(1, 0, 0);
+    //glRecti(100, 100, 200, 200);
+
+
+
+
+    ////opengl对称于指定轴
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    ////画出该轴作为参考
+    //glColor3f(0, 0, 1);
+    //glBegin(GL_LINES);
+    //glVertex2i(0, -50);
+    //glVertex2i(500, 450);
+    //glEnd();
+    ////画出原矩形
+    //glColor3f(1, 0, 0);
+    //glRecti(400, 200, 450, 250);
+
+
+    //// 逆平移回原位置
+    //glTranslatef(50, 0, 0);
+    ////逆旋转45
+    //glRotatef(-45, 0, 0, 1);
+    ////乘上对称矩阵
+    //GLfloat arr[16] =
+    //{
+    //    -1,0,0,0,
+    //    0,1,0,0,
+    //    0,0,1,0,
+    //    0,0,0,1
+
+    //};
+    //glMultMatrixf(arr);
+    ////旋转45度使其重合于y轴(也可以重合于x轴，只要之后进行对应的逆变换即可)
+    //glRotatef(45, 0, 0, 1);
+    ////先把对称轴平移到原点
+    //glTranslatef(-50, 0, 0);
+    //glColor3f(0, 1, 0);
+    //glRecti(400, 200, 450, 250);
+
+
+    //opengl绕指定点旋转2
+    //假设绕点(200,200)旋转360度
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+
+    //for (int i = 0; i < 36; i++)
+    //{
+    //    glColor3f(1-1/36.f*i, 1/36.f*i, 0);
+    //    glRecti(100, 100, 120, 120);
+    //    //画出参考线
+    //    glColor3f(0, 0, 0);
+    //    glBegin(GL_LINES);
+    //    glVertex2f(200, 200);
+    //    glVertex2f(110, 110);
+    //    glEnd();
+    //    glTranslatef(200, 200, 0);
+    //    glRotatef(10, 0, 0, 1);
+    //    glTranslatef(-200, -200, 0);
+    //}
+
+
+        
+
+    //opengl绕指定点旋转3
+    //假设绕点(200,200)旋转360度
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    for (int i = 0; i < 36; i++)
+    {
+        glColor3f(1-1/36.f*i, 1/36.f*i, 0);
+        glRecti(100, 100, 120, 120);
+        //画出参考线
+        glColor3f(0, 0, 0);
+        glBegin(GL_LINES);
+        glVertex2f(200, 200);
+        glVertex2f(110, 110);
+        glEnd();
+        glTranslatef(200, 200, 0);
+        glRotatef(10, 0, 0, 1);
+        glTranslatef(-200, -200, 0);
+    }
+
+
+    
+    ////opengl斜切变换
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+
+    //glColor3f(0, 0, 1);
+    //glRecti(100, 100, 200, 200);
+
+    //GLfloat arr[16] =
+    //{
+    //    1,0,0,0,
+    //    1,1,0,0,
+    //    0,0,1,0,
+    //    0,0,0,1
+    //};
+    //glMultMatrixf(arr);
+    //glColor3f(0, 1, 1);
+    //glRecti(100, 100, 200, 200);
+
+
+    glFlush();
+}
 
 void display()
 {
@@ -97,29 +280,14 @@ void display()
      //lineDDA(p1, p2);
 
 
-    //二维几何变换
-    //glViewport(0, 0, 100, 100);
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    //glRotatef(30, 0, 0, 1);
-    //glColor3f(1, 0, 0);
-    //glBegin(GL_TRIANGLES);
-    //glVertex2f(10, 10);
-    //glVertex2f(200, 50);
-    //glVertex2f(100,150);
-    //glEnd();
-
-    //glViewport(100, 100, 200, 200);
-    //glBegin(GL_TRIANGLES);
-    //glVertex2f(10, 10);
-    //glVertex2f(200, 50);
-    //glVertex2f(100, 150);
-    //glEnd();
-    //glFlush();
+    test1();
 
     
 
 }
+
+
+
 
 void drawRect() {
 
