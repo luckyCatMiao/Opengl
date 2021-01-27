@@ -227,7 +227,7 @@ void test1() {
     //glRecti(100, 100, 200, 200);
 
 
-    glFlush();
+    //glFlush();
 }
 
 void display()
