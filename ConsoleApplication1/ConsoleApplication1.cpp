@@ -188,23 +188,23 @@ void test1() {
 
     //opengl绕指定点旋转3
     //假设绕点(200,200)旋转360度
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
 
-    for (int i = 0; i < 36; i++)
-    {
-        glColor3f(1-1/36.f*i, 1/36.f*i, 0);
-        glRecti(100, 100, 120, 120);
-        //画出参考线
-        glColor3f(0, 0, 0);
-        glBegin(GL_LINES);
-        glVertex2f(200, 200);
-        glVertex2f(110, 110);
-        glEnd();
-        glTranslatef(200, 200, 0);
-        glRotatef(10, 0, 0, 1);
-        glTranslatef(-200, -200, 0);
-    }
+    //for (int i = 0; i < 36; i++)
+    //{
+    //    glColor3f(1-1/36.f*i, 1/36.f*i, 0);
+    //    glRecti(100, 100, 120, 120);
+    //    //画出参考线
+    //    glColor3f(0, 0, 0);
+    //    glBegin(GL_LINES);
+    //    glVertex2f(200, 200);
+    //    glVertex2f(110, 110);
+    //    glEnd();
+    //    glTranslatef(200, 200, 0);
+    //    glRotatef(10, 0, 0, 1);
+    //    glTranslatef(-200, -200, 0);
+    //}
 
 
     
