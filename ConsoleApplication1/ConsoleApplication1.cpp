@@ -204,8 +204,6 @@ void test1() {
 	//    glTranslatef(-200, -200, 0);
 	//}
 
-
-
 	////opengl斜切变换
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -226,6 +224,7 @@ void test1() {
 
 
 	//glFlush();
+
 
 	//opengl三维几何变换  
 	//opengl三维平移
@@ -252,13 +251,18 @@ void test1() {
 
 
 	//opengl三维旋转(绕平行于坐标轴的轴旋转)
+	//此例为原点绕经过(0,0,-5)垂直于xz平面的旋转轴进行旋转
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
+	////为了方便查看效果，将整体向z轴负向平移10个单位
 	//glTranslatef(0, 0, -10);
 	//for (int i = 0; i < 18; i++)
 	//{
+	//	//进行逆平移
 	//	glTranslatef(0, 0, -5);
+	//	//进行所需的旋转
 	//	glRotatef(20, 0, 1, 0);
+	//	//将坐标轴平移至与y轴重合
 	//	glTranslatef(0, 0, 5);
 	//	glColor3f(1, 0, 0);
 	//	glutWireCube(1);
@@ -266,14 +270,13 @@ void test1() {
 
 
 
-//opengl三维旋转(绕不平行于坐标轴的轴旋转)
+	//opengl三维旋转(绕不平行于坐标轴的轴旋转)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	glTranslatef(-1, -1, -20);
-
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
+	//绘制出旋转轴
 	glVertex3f(-25, -30, -25);
 	glVertex3f(20, 15, 20);
 	glEnd();
@@ -318,6 +321,9 @@ void test1() {
 	//	glVertex2f(0, 0);
 	//	glEnd();
 	//}
+
+
+	//三维对称于某个平面
 
 	glFlush();
 }
