@@ -351,30 +351,32 @@ void test2()
 	//四次的情况，此时需要五个点来确定一条曲线
 	//代入t值为0 1/4 2/4 3/4 1得出的矩阵
 	//控制点的数据 为列向量
-	Matrix<double, 5, 1> xdatas;
-	xdatas << 50, 150, 250, 350, 450;
-	Matrix<double, 5, 1> ydatas;
-	ydatas << 200, 400, 200, 400, 300;
-	quarticInterpolationCurve(xdatas, ydatas);
+	//Matrix<double, 5, 1> xdatas;
+	//xdatas << 50, 150, 250, 350, 450;
+	//Matrix<double, 5, 1> ydatas;
+	//ydatas << 200, 400, 200, 400, 300;
+	//quarticInterpolationCurve(xdatas, ydatas);
 
 
-	//控制点的数据 为列向量 前两个为点的位置，后两个为导数
+	//控制点的数据
 	//Matrix<double, 4, 1> xdatas = { 50,450,200,200 };
 	//Matrix<double, 4, 1> ydatas = { 100,100,20,-500 };
 	//hermiteCurve(xdatas, ydatas);
 
+
+
 	//三次cardinal曲线
 	//控制点的数据 为四个点
 	//Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
-	//Matrix<double, 4, 1> ydatas = { 100,200,400,150 };
+	//Matrix<double, 4, 1> ydatas = { 100,300,250,100 };
 	//cardinalCurve(xdatas, ydatas);
 
 
 	//三次贝塞尔曲线
 	//控制点的数据 为四个点
-	//Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
-	//Matrix<double, 4, 1> ydatas = { 100,300,400,150 };
-	//bezierCurve(xdatas, ydatas);
+	Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
+	Matrix<double, 4, 1> ydatas = { 100,300,400,150 };
+	bezierCurve(xdatas, ydatas);
 }
 
 void eigenTest()
