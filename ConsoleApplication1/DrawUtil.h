@@ -5,6 +5,8 @@
 
 #include "MathStruct.h"
 #include<glut.h>
+#include<Eigen/Dense>
+using namespace Eigen;
 
 //»­Ïß
 void lineDDA(Point p1,Point p2);
@@ -26,4 +28,13 @@ void floodFill4Recur(int x, int y, GLfloat* borderColor, GLfloat* fillColor);
 //²Ã¼ô
 bool cohen_Sutherland_LineClip(Point& p1, Point& p2, Point min, Point max);
 bool pointClip(Point& point, Point min, Point max);
+
+
+//²åÖµÇúÏß
+void quadraticInterpolationCurve(Matrix<double, 3, 1> xdatas, Matrix<double, 3, 1> ydatas);
+void cubicInterpolationCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas);
+void quarticInterpolationCurve(Matrix<double, 5, 1> xdatas, Matrix<double, 5, 1> ydatas);
+void hermiteCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas);
+void cardinalCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas);
+void bezierCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas);
 #endif // !MathStruct

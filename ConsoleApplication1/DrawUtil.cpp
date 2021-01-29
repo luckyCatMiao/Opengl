@@ -3,7 +3,10 @@
 #include <math.h>
 #include<stdio.h>
 #include<stack>
+#include<Eigen/Dense>
+
 using namespace std;
+using namespace Eigen;
 inline int max(float a, float b) { return a > b ? a : b; }
 #define round(x) ((int)(x+0.5))
 #define floatEqual(a,b) (fabs(a-b)<=0.01?1:0)
@@ -396,3 +399,286 @@ bool pointClip(Point& point, Point min, Point max)
 }
 
 
+
+//绘制二次插值曲线
+void quadraticInterpolationCurve(Matrix<double, 3, 1> xdatas, Matrix<double, 3, 1> ydatas)
+{
+	Matrix3d m;
+	m << 0, 0, 1,
+		0.25, 0.5, 1,
+		1, 1, 1;
+
+	//画出控制点
+	glPointSize(5);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 3; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+
+	//计算出二次曲线的系数
+	Matrix<double, 1, 3> xabc = m.inverse() * xdatas;
+	Matrix<double, 1, 3> yabc = m.inverse() * ydatas;
+
+	//绘制出所得曲线
+	glColor3f(1, 0, 0);
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x = xabc[0] * t * t + xabc[1] * t + xabc[2];
+		double y = yabc[0] * t * t + yabc[1] * t + yabc[2];
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+
+//绘制三次插值曲线
+void cubicInterpolationCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas)
+{
+	//代入t值为0 1/3 2/3 1得出的矩阵
+	Matrix4d m;
+	m << 0, 0, 0, 1,
+		pow(1 / 3.f, 3), pow(1 / 3.f, 2), 1 / 3.f, 1,
+		pow(2 / 3.f, 3), pow(2 / 3.f, 2), 2 / 3.f, 1,
+		1, 1, 1, 1;
+
+	//画出控制点
+	glPointSize(5);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 4; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+
+	//计算出三次曲线的系数
+	Matrix<double, 1, 4> xabc = m.inverse() * xdatas;
+	Matrix<double, 1, 4> yabc = m.inverse() * ydatas;
+
+	//绘制出所得曲线
+	glColor3f(1, 0, 0);
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x = xabc[0] * t * t * t + xabc[1] * t * t + xabc[2] * t + xabc[3];
+		double y = yabc[0] * t * t * t + yabc[1] * t * t + yabc[2] * t + yabc[3];
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+
+//绘制四次插值曲线
+void quarticInterpolationCurve(Matrix<double, 5, 1> xdatas, Matrix<double, 5, 1> ydatas)
+{
+	Matrix<double,5,5> m;
+	m << 0, 0, 0, 0,1,
+		pow(1 / 4.f, 4), pow(1 / 4.f, 3), pow(1 / 4.f, 2),1 / 4.f, 1,
+		pow(2 / 4.f, 4), pow(2 / 4.f, 3), pow(2 / 4.f, 2),2 / 4.f, 1,
+		pow(3 / 4.f, 4), pow(3 / 4.f, 3), pow(3 / 4.f, 2), 3 / 4.f, 1,
+		1, 1, 1, 1,1;
+
+
+	//画出控制点
+	glPointSize(5);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 5; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+
+	//计算出四次曲线的系数
+	Matrix<double, 1, 5> xabc = m.inverse() * xdatas;
+	Matrix<double, 1, 5> yabc = m.inverse() * ydatas;
+
+	//绘制出所得曲线
+	glColor3f(1, 0, 0);
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x = xabc[0] * t * t * t*t + xabc[1] * t * t*t + xabc[2] * t*t + xabc[3]*t+xabc[4];
+		double y = yabc[0] * t * t * t * t + yabc[1] * t * t * t + yabc[2] * t * t + yabc[3] * t + yabc[4];
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+//绘制hermite曲线(三次)
+void hermiteCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas)
+{
+	//三次hermite曲线
+	Matrix4d m;
+	m << 0, 0, 0, 1,
+		 1, 1, 1, 1,
+		 0, 0, 1, 0,
+		 3, 2, 1, 0;
+
+	glPointSize(10);
+	glColor3f(0, 1, 0);
+	//画出控制点
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 2; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+
+	
+	//画出头和尾的切线 根据dy/dx=(dy/dt)/(dx/dt)算出斜率，加上一个经过点得出直线方程
+	double k1 = (double)ydatas[2] / xdatas[2];
+	double x1 = xdatas[0] - 100;
+	double y1 = k1 * ( x1- xdatas[0]) + ydatas[0];
+	double x2 = xdatas[0] + 100;
+	double y2 = k1 * (x2 - xdatas[0]) + ydatas[0];
+
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+	glVertex2d(x1, y1);
+	glVertex2d(x2, y2);
+	glEnd();
+
+
+	k1 = (double)ydatas[3] / xdatas[3];
+	x1 = xdatas[1] - 100;
+	y1 = k1 * (x1 - xdatas[1]) + ydatas[1];
+	x2 = xdatas[1] + 100;
+	y2 = k1 * (x2 - xdatas[1]) + ydatas[1];
+
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+	glVertex2d(x1, y1);
+	glVertex2d(x2, y2);
+	glEnd();
+
+
+	//计算出三次曲线的系数
+	Matrix<double, 1, 4> xabc = m.inverse() * xdatas;
+	Matrix<double, 1, 4> yabc = m.inverse() * ydatas;
+
+	//绘制出所得曲线
+	glColor3f(1, 0, 0);
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x = xabc[0] * t * t * t + xabc[1] * t * t + xabc[2] * t + xabc[3];
+		double y = yabc[0] * t * t * t + yabc[1] * t * t + yabc[2] * t + yabc[3];
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+
+//绘制cardinal曲线(三次)
+void cardinalCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas)
+{
+	//三次cardinal曲线
+	Matrix4d m;
+	m << 0, 0, 1, 0,
+		 0, 0, 0, 1,
+		 1, 1, 1, 1,
+		 3, 2, 1, 0;
+
+	//画出控制点
+	glPointSize(10);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 4; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+
+	//连接几个控制点
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+	glVertex2d(xdatas[0], ydatas[0]);
+	glVertex2d(xdatas[2], ydatas[2]);
+	glEnd();
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+	glVertex2d(xdatas[1], ydatas[1]);
+	glVertex2d(xdatas[3], ydatas[3]);
+	glEnd();
+
+
+	//计算出四个斜率 ，在t=0点x,y对t的导数，在t=1点x,y对t的导数 最后乘上一个额外系数q,可以通过这个系数调整曲线的'松紧度'
+	//这里简单取1
+	int q = 1;
+	int kxt0 = (xdatas[2] - xdatas[0]) / 2*q;
+	int kyt0 = (ydatas[2] - ydatas[0]) / 2*q;
+	int kxt1 = (xdatas[3] - xdatas[1]) / 2*q;
+	int kyt1 = (ydatas[3] - ydatas[1]) / 2*q;
+
+	//覆盖数据为斜率
+	xdatas[0] = kxt0;
+	xdatas[3] = kxt1;
+	ydatas[0] = kyt0;
+	ydatas[3] = kyt1;
+
+	//控制点乘上逆矩阵得出二次曲线的系数
+	Matrix<double, 1, 4> xabc = m.inverse() * xdatas;
+	Matrix<double, 1, 4> yabc = m.inverse() * ydatas;
+
+	//绘制出所得曲线
+	glColor3f(1, 0, 0);
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x = xabc[0] * t * t * t + xabc[1] * t * t + xabc[2] * t + xabc[3];
+		double y = yabc[0] * t * t * t + yabc[1] * t * t + yabc[2] * t + yabc[3];
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+
+
+//绘制贝塞尔曲线(三次)
+void bezierCurve(Matrix<double, 4, 1> xdatas, Matrix<double, 4, 1> ydatas)
+{
+
+	//画出控制点
+	glPointSize(10);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 4; i++)
+		glVertex2f(xdatas[i], ydatas[i]);
+	glEnd();
+	//连接控制点
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < 4; i++)
+	{
+		glVertex2f(xdatas[i], ydatas[i]);
+	}
+	glEnd();
+
+
+	//使用三次贝塞尔曲线公式进行计算画线
+	glPointSize(1);
+	glColor3f(1, 0, 0);
+	glBegin(GL_POINTS);
+	for (double t = 0; t <= 1; t += 0.01f)
+	{
+		double x =
+			xdatas[0] * 1 * pow(t, 0) * pow(1 - t, 3) +
+			xdatas[1] * 3 * pow(t, 1) * pow(1 - t, 2) +
+			xdatas[2] * 3 * pow(t, 2) * pow(1 - t, 1) +
+			xdatas[3] * 1 * pow(t, 3) * pow(1 - t, 0);
+
+		double y =
+			ydatas[0] * 1 * pow(t, 0) * pow(1 - t, 3) +
+			ydatas[1] * 3 * pow(t, 1) * pow(1 - t, 2) +
+			ydatas[2] * 3 * pow(t, 2) * pow(1 - t, 1) +
+			ydatas[3] * 1 * pow(t, 3) * pow(1 - t, 0);
+
+			glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}

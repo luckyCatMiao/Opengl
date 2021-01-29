@@ -11,6 +11,7 @@
 #include "Vector2.h"
 #include "Matrix2D.h"
 #include<Eigen/Dense>
+#include<cmath>
 
 using namespace std;
 using namespace Eigen;
@@ -44,8 +45,8 @@ void init()
 	glClearColor(1, 1, 1, 1);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, 1, 0, 100);
-	//gluOrtho2D(0, 500, 0, 500);
+	//gluPerspective(45, 1, 0, 100);
+	gluOrtho2D(0, 500, 0, 500);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(0.5, 0.5);
 }
@@ -328,13 +329,52 @@ void test1() {
 }
 
 
+
 void test2()
 {
-	//测试样条曲线
-	//插值样条曲线
-	
+
+	//二次插值曲线
+	//控制点的数据 为列向量
+	//Matrix<double,3,1> xdatas = { 100,200,400 };
+	//Matrix<double, 3, 1> ydatas = { 200,400,350 };
+	//quadraticInterpolationCurve(xdatas, ydatas);
 
 
+
+	//三次的情况，此时需要四个点来确定一条曲线
+	//控制点的数据 为列向量
+	//Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
+	//Matrix<double, 4, 1> ydatas = { 200,400,200,400 };
+	//cubicInterpolationCurve(xdatas, ydatas);
+
+
+	//四次的情况，此时需要五个点来确定一条曲线
+	//代入t值为0 1/4 2/4 3/4 1得出的矩阵
+	//控制点的数据 为列向量
+	Matrix<double, 5, 1> xdatas;
+	xdatas << 50, 150, 250, 350, 450;
+	Matrix<double, 5, 1> ydatas;
+	ydatas << 200, 400, 200, 400, 300;
+	quarticInterpolationCurve(xdatas, ydatas);
+
+
+	//控制点的数据 为列向量 前两个为点的位置，后两个为导数
+	//Matrix<double, 4, 1> xdatas = { 50,450,200,200 };
+	//Matrix<double, 4, 1> ydatas = { 100,100,20,-500 };
+	//hermiteCurve(xdatas, ydatas);
+
+	//三次cardinal曲线
+	//控制点的数据 为四个点
+	//Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
+	//Matrix<double, 4, 1> ydatas = { 100,200,400,150 };
+	//cardinalCurve(xdatas, ydatas);
+
+
+	//三次贝塞尔曲线
+	//控制点的数据 为四个点
+	//Matrix<double, 4, 1> xdatas = { 100,200,300,400 };
+	//Matrix<double, 4, 1> ydatas = { 100,300,400,150 };
+	//bezierCurve(xdatas, ydatas);
 }
 
 void eigenTest()
@@ -348,7 +388,7 @@ void eigenTest()
 
 	//使用Matrix3d创建一个3*3的方阵,用重载过的<<运算符来初始化它
 	Matrix3d m3;
-	m3 <<1, 2, 3,
+	m3 << 1, 2, 3,
 		4, 5, 6,
 		7, 8, 9;
 
@@ -356,7 +396,7 @@ void eigenTest()
 	MatrixXd m2 = MatrixXd::Random(3, 3);
 
 	//MatrixXd::Random创建一个3*3的常量矩阵，每个矩阵元素都是1
-	MatrixXd m4 = MatrixXd::Constant(3, 3,1);
+	MatrixXd m4 = MatrixXd::Constant(3, 3, 1);
 
 
 	//用Matrix模板创建一个元素类型为float,4*4的矩阵
@@ -366,7 +406,7 @@ void eigenTest()
 	//返回矩阵的行列数
 	m1.rows();
 	m1.cols();
-	
+
 	//两个矩阵的加减乘运算,直接使用重载过的+-*号即可
 	Matrix2d a;
 	a << 1, 2,
@@ -391,8 +431,8 @@ void eigenTest()
 	Vector3d v1(1, 2, 3);
 
 	//矩阵右乘向量
-	cout << m2*v1 << endl;
-	
+	cout << m2 * v1 << endl;
+
 	//创建两个三维向量并进行点积和叉积
 	Vector3d v(1, 2, 3);
 	Vector3d w(0, 1, 2);
@@ -401,7 +441,7 @@ void eigenTest()
 	v.cross(w);
 
 
-	
+
 
 }
 void display()
