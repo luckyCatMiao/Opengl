@@ -394,3 +394,5 @@ bool pointClip(Point& point, Point min, Point max)
 {
 	return(point.x > min.x && point.x<max.x&& point.y>min.y && point.y < max.y);
 }
+
+
