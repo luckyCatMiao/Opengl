@@ -1,7 +1,7 @@
 // ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include<glut.h>
+#include <glut.h>
 #include "DrawUtil.h"
 #include "MathStruct.h"
 #include <stdio.h>
@@ -12,6 +12,7 @@
 #include "Matrix2D.h"
 #include<Eigen/Dense>
 #include<cmath>
+#include "Sierpinski.h"
 
 using namespace std;
 using namespace Eigen;
@@ -25,13 +26,13 @@ void drawRect();
 
 int main(int argc, char** argv)
 {
-
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(500, 500);
 	glutInitWindowSize(500, 500);
-	glutCreateWindow("title");
-
+	glutCreateWindow("study");
+	
 	init();
 
 	glutDisplayFunc(display);
@@ -46,7 +47,7 @@ void init()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluPerspective(45, 1, 0, 100);
-	gluOrtho2D(0, 500, 0, 500);
+	gluOrtho2D(0, 50, 0, 50);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(0.5, 0.5);
 }
@@ -448,7 +449,12 @@ void eigenTest()
 }
 void display()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	GLfloat vertices[3][2] = { {0.0,0.0},{25.0,50.0},{50.0,0.0} }; 
+	GLfloat p[2] = { 7.5,5.0 };  
+	//DrawSierpinskiByPoint(vertices, p, 5000);
+	DrawSierpinskiBySolid(vertices, 5);
+
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	//gradientLineTest();//测试渐变色直线
 	//gradientTriangleTest(); //测试渐变三角形
@@ -498,7 +504,7 @@ void display()
 
 	//test1();
 
-	test2();
+	//test2();
 
 	//eigenTest();
 
