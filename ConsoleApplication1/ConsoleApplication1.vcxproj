@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="DrawUtil.cpp" />
-    <ClCompile Include="Matrix2D.cpp" />
     <ClCompile Include="Sierpinski.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
