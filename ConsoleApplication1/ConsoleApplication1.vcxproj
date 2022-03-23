@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,12 +151,14 @@
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="DrawUtil.cpp" />
     <ClCompile Include="Matrix2D.cpp" />
+    <ClCompile Include="Sierpinski.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrawUtil.h" />
     <ClInclude Include="MathStruct.h" />
     <ClInclude Include="Matrix2D.h" />
+    <ClInclude Include="Sierpinski.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
